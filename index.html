@@ -1,239 +1,341 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
     <title>Thinking Like a Senior Developer</title>
     <meta name="description" content="Bincom Knowledge Development Session - Decision-Making, Tradeoffs & Technical Ownership" />
     <meta name="author" content="Adesemowo Emmanuel" />
 
-    <!-- Tailwind CSS CDN -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              primary: '#3b82f6',
-              accent: '#10b981',
-              darkbg: '#0f172a',
-              card: '#1e293b',
-              lighttext: '#e2e8f0',
+              primary: "#3b82f6",
+              accent: "#10b981",
+              darkbg: "#0f172a",
+              card: "#1e293b",
+              lighttext: "#e2e8f0",
             },
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-            }
-          }
-        }
-      }
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
     </script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- Reveal.js -->
-    <link rel="stylesheet" href="dist/reveal.css" />
-    <link rel="stylesheet" href="dist/theme/black.css" id="theme" />
-    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+    <!-- Reveal.js 5.x CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/black.min.css"
+      id="theme"
+    />
+
+    <!-- Highlight.js -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai-sublime.min.css"
+    />
 
     <style>
-      :root {
-        --r-background-color: #0f172a;
-        --r-main-color: #e2e8f0;
-        --r-heading-color: #ffffff;
-        --r-link-color: #3b82f6;
-        --r-link-color-hover: #60a5fa;
+      .reveal .slides section {
+        text-align: left;
+        padding: 60px 60px;
       }
 
-      body {
-        background-color: #0f172a;
-      }
-
-      .reveal {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.15rem;
-        font-weight: 400;
+      .reveal .title-slide {
+        text-align: center;
       }
 
       .reveal h1 {
-        font-size: 4.5rem !important;
+        font-size: 4rem !important;
         font-weight: 900 !important;
-        letter-spacing: -0.04em;
-        line-height: 1.05;
-        color: #ffffff;
+        line-height: 1.1;
       }
 
       .reveal h2 {
-        font-size: 3.6rem !important;
+        font-size: 3.2rem !important;
         font-weight: 800 !important;
-        letter-spacing: -0.03em;
-        line-height: 1.1;
         color: #3b82f6;
+        margin-bottom: 2rem;
       }
 
       .reveal h3 {
-        font-size: 2.8rem !important;
-        font-weight: 800 !important;
+        font-size: 2.4rem !important;
+        font-weight: 700 !important;
         color: #10b981;
+        margin-bottom: 1.5rem;
       }
 
-      .reveal li {
-        font-size: 1.5rem !important;
-      }
-
-      .reveal .slides section {
-        text-align: left;
-        padding: 40px 80px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        min-height: 100vh;
-      }
-
-      .reveal .slides section.smaller-title {
-        text-align: center;
-        align-items: center;
-      }
-
-      .reveal ul, .reveal ol {
+      .reveal ul {
         margin-left: 1.5em;
-        line-height: 1.7;
-        font-size: 1.15rem;
+        line-height: 1.8;
       }
 
       .reveal li {
-        margin-bottom: 0.3em;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
       }
 
-      .text-primary   { color: #3b82f6; }
-      .text-accent    { color: #10b981; }
-      .text-light     { color: #e2e8f0; }
-      .bg-card        { 
-        background-color: #1e293b; 
-        border-radius: 12px; 
-        padding: 1.8rem; 
-        margin: 1rem 0;
+      .reveal p {
+        font-size: 1.6rem;
       }
 
-      .emoji-big {
-        font-size: 3.5rem;
-        margin-right: 0.8rem;
-        vertical-align: middle;
+      .bg-card {
+        background-color: #1e293b;
+        border-radius: 16px;
+        padding: 2rem;
       }
 
-      .reveal strong {
-        font-weight: 800;
-        color: #ffffff;
+      .grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 3rem;
       }
 
-      /* Code blocks look better */
+      .text-light {
+        color: #e2e8f0;
+      }
+
+      .text-gray {
+        color: #94a3b8;
+      }
+
       pre code {
-        font-size: 1.1rem !important;
-        padding: 1rem !important;
+        border-radius: 12px;
+        padding: 1.5rem !important;
+        font-size: 1rem !important;
+      }
+
+      @media (min-width: 1400px) {
+        .reveal .slides section {
+          padding: 80px 160px;
+        }
+        .reveal h1 { font-size: 4.5rem !important; }
+        .reveal h2 { font-size: 3.6rem !important; }
+        .reveal li { font-size: 2rem; }
       }
     </style>
   </head>
-
   <body>
     <div class="reveal">
       <div class="slides">
 
         <!-- Slide 1: Title -->
-        <section data-background-color="#0f172a" class="smaller-title flex flex-col items-center justify-center min-h-screen">
-          <h1 class="text-white font-black">
+        <section data-background-color="#0f172a" class="title-slide">
+          <h1 class="text-white font-black text-center leading-tight">
             Thinking Like a Senior Developer
           </h1>
-          <h2 class="mt-10 text-primary text-5xl font-bold">
+          <h2 class="mt-10 text-primary text-center font-bold text-5xl">
             Decision-Making, Tradeoffs & Technical Ownership
           </h2>
-          <div class="mt-24 text-center">
-            <p class="text-2xl text-gray-300">Bincom Knowledge Development Session</p>
-            <p class="mt-3 text-xl text-gray-500">Adesemowo Emmanuel • April 2026</p>
-          </div>
-          <p class="mt-16 text-xl text-accent italic">Elevate your game: From writing code to owning solutions 🚀</p>
+          <p class="mt-20 text-3xl text-center text-lighttext">
+            Adesemowo Emmanuel • February 27, 2026
+          </p>
+          <p class="mt-4 text-2xl text-center text-gray">
+            Bincom Knowledge Development Session
+          </p>
+          <p class="mt-16 text-2xl text-center text-accent italic">
+            From writing code to owning solutions 🚀
+          </p>
         </section>
 
-        <!-- Slide 2: Agenda -->
+        <!-- Slide 2a: Why Senior Thinking Matters (Part 1) -->
         <section>
-          <h2 class="text-5xl font-bold text-primary mb-12">What We're Covering Today</h2>
-          <ul class="text-2xl text-lighttext space-y-1">
-            <li><span class="emoji-big">🔍</span> Why senior thinking matters in 2026</li>
-            <li><span class="emoji-big">🧠</span> Mindset shift: From executor to owner</li>
-            <li><span class="emoji-big">⚖️</span> Mastering tradeoffs: The art of "good enough"</li>
-            <li><span class="emoji-big">🛠️</span> Decision-making frameworks: Tools for seniors</li>
-            <li><span class="emoji-big">🏗️</span> Architecture & communication: Owning the big picture</li>
-            <li><span class="emoji-big">👐</span> Hands-on: Apply it now</li>
-            <li><span class="emoji-big">📈</span> Wrap-up: Become the senior you envision</li>
+          <h2 class="font-bold mb-12">1️⃣ Why Senior-Level Thinking Matters in 2026</h2>
+          <h3 class="text-accent mb-4">Career Levels</h3>
+          <ul class="space-y-2 text-light">
+            <li>Junior → Executes tasks</li>
+            <li>Mid-level → Delivers features efficiently</li>
+            <li>Senior → Drives strategic impact</li>
           </ul>
-          <p class="mt-16 text-xl text-gray-400 text-center">
-            Let's get real — this is the mindset that unlocks lead roles
+          <p class="mt-6 text-gray italic">
+            Takeaway: Moving up means thinking beyond code—own the outcome.
           </p>
         </section>
 
-        <!-- Slide 3: Why Senior Thinking Matters -->
+        <!-- Slide 2b: Why Senior Thinking Matters (Part 2) -->
         <section>
-          <h2 class="text-5xl font-bold text-primary mb-10">Why Senior Thinking Matters in 2026</h2>
-          <div class="grid grid-cols-2 gap-8">
-            <div class="bg-card">
-              <h3 class="text-3xl text-accent mb-6">The Levels</h3>
-              <ul class="text-xl space-y-4">
-                <li>Junior: Code execution</li>
-                <li>Mid: Efficient features</li>
-                <li>Senior: Strategic impact</li>
-              </ul>
-            </div>
-            <div class="bg-card">
-              <h3 class="text-3xl text-accent mb-6">Key Insights</h3>
-              <ul class="text-xl space-y-4">
-                <li>Builds on junior-to-mid: It's about mindset</li>
-                <li>AI handles code; you handle tradeoffs</li>
-                <li>70% of failures from poor decisions [Stack Overflow]</li>
-              </ul>
-            </div>
-          </div>
-          <p class="mt-12 text-2xl text-accent text-center">
-            Senior = Problem owner, not just solver
+          <h3 class="text-accent mb-4">Reality Today</h3>
+          <ul class="space-y-2 text-light">
+            <li>AI writes code faster than ever</li>
+            <li>Humans still own decisions & tradeoffs</li>
+            <li>70% of project failures come from poor decisions</li>
+          </ul>
+          <p class="mt-6 text-gray italic">
+            Takeaway: Senior developers add value by guiding decisions, not just writing code.
+          </p>
+          <p class="mt-8 text-2xl text-accent">
+            Senior = Problem owner, not just problem solver
           </p>
         </section>
 
-        <!-- The rest of the slides (I shortened for brevity here, but paste the full version from earlier message if needed) -->
-        <!-- ... paste Slide 4 to Slide 10 from previous full HTML ... -->
+        <!-- Slide 3: Mindset Shift -->
+        <section>
+          <h2 class="font-bold mb-10">2️⃣ The Mindset Shift: Executor → Owner</h2>
+          <ul class="space-y-6 text-2xl text-light">
+            <li>Treat every feature like your own product<br /><span class="text-gray italic">Example: You own the signup feature, not just the login form.</span></li>
+            <li>Anticipate issues before they happen<br /><span class="text-gray italic">Example: Think about scaling, security, and edge cases.</span></li>
+            <li>Ask “Why?” deeply — understand business impact<br /><span class="text-gray italic">Example: Why are we building this? Will it delight users?</span></li>
+            <li>Document decisions (use ADRs)<br /><span class="text-gray italic">Example: Future teammates understand why choices were made.</span></li>
+          </ul>
+          <p class="mt-12 text-2xl text-gray">
+            Takeaway: This shift turns good developers into indispensable ones.
+          </p>
+        </section>
 
-        <!-- Slide 10: Q&A / Thank You -->
-        <section data-background-color="#0f172a">
+        <!-- Slide 4a: Tradeoffs -->
+        <section>
+          <h2 class="font-bold mb-12">3️⃣ Mastering Tradeoffs</h2>
+          <p class="text-2xl text-light mb-8">Every decision has costs. Seniors choose consciously.</p>
+          <ul class="space-y-6 text-2xl text-light">
+            <li>Performance vs Readability</li>
+            <li>Scalability vs Simplicity</li>
+            <li>Speed of Delivery vs Quality</li>
+            <li>Cost vs Features</li>
+          </ul>
+        </section>
+
+        <!-- Slide 4b: Tradeoffs Example -->
+        <section>
+          <h3 class="font-bold text-accent mb-8">Real Example</h3>
+          <pre><code class="javascript" data-trim data-line-numbers>
+// Fast but complex (hard to maintain)
+for (let i = 0; i < arr.length; i += 2) { ... }
+
+// Clean & readable (minor perf hit)
+arr.forEach(item => process(item));
+          </code></pre>
+          <p class="mt-12 text-2xl text-accent">
+            Takeaway: Seniors pick based on context — perfection is the enemy of done.
+          </p>
+        </section>
+
+        <!-- Slide 5a: Decision Frameworks -->
+        <section>
+          <h2 class="font-bold mb-12">4️⃣ Decision-Making Frameworks Seniors Use</h2>
+          <h3 class="text-accent mb-4">RICE Scoring</h3>
+          <ul class="space-y-4 text-light">
+            <li>Reach</li>
+            <li>Impact</li>
+            <li>Confidence</li>
+            <li>Effort</li>
+          </ul>
+          <p class="mt-4 text-gray italic">Use RICE to prioritize features objectively based on value vs effort.</p>
+        </section>
+
+        <!-- Slide 5b: DACI -->
+        <section>
+          <h3 class="text-accent mb-4">DACI Framework</h3>
+          <ul class="space-y-4 text-light">
+            <li>Driver</li>
+            <li>Approver</li>
+            <li>Contributors</li>
+            <li>Informed</li>
+          </ul>
+          <p class="mt-4 text-gray italic">Use DACI to clarify roles in team decisions and make choices defensible.</p>
+          <p class="mt-8 text-2xl text-gray">Frameworks make decisions repeatable and defensible.</p>
+        </section>
+
+        <!-- Slide 6: Architecture & Communication -->
+        <section>
+          <h2 class="font-bold mb-12">5️⃣ Architecture & Communication</h2>
+          <ul class="space-y-6 text-2xl text-light">
+            <li>Design system flow before writing code</li>
+            <li>Explain decisions with simple analogies</li>
+            <li>Accept feedback without ego</li>
+            <li>Document tradeoffs for future teammates</li>
+          </ul>
+          <p class="mt-16 text-2xl text-accent">
+            Takeaway: Great code + clear communication = Trusted leadership.
+          </p>
+        </section>
+
+        <!-- Slide 7: Hands-On Scenario -->
+        <section data-background-color="#991b1b">
+          <h2 class="text-white font-bold mb-12">6️⃣ Hands-On Scenario</h2>
+          <p class="text-2xl text-light mb-8">
+            You’re adding user authentication with AI-based login suggestions.
+          </p>
+          <ul class="space-y-6 text-2xl text-light">
+            <li>JWT vs Sessions?</li>
+            <li>Performance vs Security?</li>
+            <li>Simple implementation vs Scalable design?</li>
+            <li>Quick delivery vs Thorough testing?</li>
+          </ul>
+          <pre class="mt-12"><code class="javascript" data-trim>
+// Example tradeoff: JWT
+const token = jwt.sign(payload, secret, { expiresIn: '7d' });
+// Stateless & scalable — but larger tokens
+          </code></pre>
+          <p class="mt-12 text-3xl text-accent font-bold">
+            What would you choose — and why?
+          </p>
+        </section>
+
+        <!-- Slide 8: Your Next Steps -->
+        <section>
+          <h2 class="font-bold mb-12">7️⃣ Your Path to Senior Impact</h2>
+          <ol class="space-y-6 text-2xl text-light list-decimal pl-8">
+            <li>Pick one framework (RICE or DACI) and use it this week</li>
+            <li>Own one full feature end-to-end in your next task</li>
+            <li>Document one tradeoff decision with clear reasons</li>
+            <li>Practice explaining a past decision to a teammate</li>
+            <li>Review your recent code with “senior eyes”</li>
+          </ol>
+          <p class="mt-12 text-3xl text-accent font-bold">
+            Small consistent actions → Senior impact in months
+          </p>
+        </section>
+
+        <!-- Slide 9: Q&A -->
+        <section data-background-color="#1e293b">
           <h1 class="text-7xl font-bold text-white mb-16">Questions?</h1>
-          <p class="text-3xl text-accent mb-12">Let's talk about your senior journey</p>
-          <ul class="text-2xl text-lighttext space-y-6 max-w-4xl mx-auto">
-            <li>→ What's your biggest tradeoff challenge?</li>
-            <li>→ Which framework will you try first?</li>
-            <li>→ Any decision horror stories?</li>
+          <ul class="space-y-8 text-3xl text-light max-w-5xl mx-auto">
+            <li>→ What’s your biggest decision challenge right now?</li>
+            <li>→ Which tradeoff do you struggle with most?</li>
+            <li>→ Any decision horror story from a project?</li>
           </ul>
-          <p class="mt-20 text-2xl text-primary text-center">Thank you! Reach out anytime 🚀</p>
+          <p class="mt-20 text-3xl text-primary">Let’s discuss!</p>
+        </section>
+
+        <!-- Slide 10: Thank You -->
+        <section data-background-color="#0f172a" class="title-slide">
+          <h1 class="text-6xl font-bold text-white">Thank You!</h1>
+          <p class="mt-12 text-3xl text-primary">Keep deciding wisely 🚀</p>
+          <p class="mt-8 text-2xl text-lighttext">Reach out anytime @Hade_emm</p>
         </section>
 
       </div>
     </div>
 
-    <script src="dist/reveal.js"></script>
-    <script src="plugin/notes/notes.js"></script>
-    <script src="plugin/highlight/highlight.js"></script>
+    <!-- Reveal.js Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
 
     <script>
       Reveal.initialize({
         hash: true,
-        transition: 'slide',
-        slideNumber: 'c/t',
-        controls: true,
-        progress: true,
-        center: false,
-        width: 1200,
-        height: 800,
-        margin: 0.1,
-        minScale: 0.2,
-        maxScale: 2.0,
-        plugins: [ RevealHighlight, RevealNotes ]
+        transition: "slide",
+        slideNumber: "c/t",
+        plugins: [RevealHighlight],
       });
     </script>
   </body>
