@@ -13,7 +13,7 @@
     }
   ],
   "outputDirectory": ".",
-    "headers": [
+  "headers": [
     {
       "source": "/(.*)",
       "headers": [
@@ -24,5 +24,4 @@
       ]
     }
   ]
-
 }
