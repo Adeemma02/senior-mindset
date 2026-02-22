@@ -1,342 +1,311 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Thinking Like a Senior Developer</title>
-    <meta name="description" content="Bincom Knowledge Development Session - Decision-Making, Tradeoffs & Technical Ownership" />
-    <meta name="author" content="Adesemowo Emmanuel" />
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Thinking Like a Senior Developer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css">
 
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: "#3b82f6",
-              accent: "#10b981",
-              darkbg: "#0f172a",
-              card: "#1e293b",
-              lighttext: "#e2e8f0",
-            },
-            fontFamily: {
-              sans: ["Inter", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap"
-      rel="stylesheet"
-    />
+  <style>
+    .reveal section {
+      padding: 60px 100px;
+    }
 
-    <!-- Reveal.js 5.x CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/black.min.css"
-      id="theme"
-    />
+    .bg-card {
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+    }
 
-    <!-- Highlight.js -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai-sublime.min.css"
-    />
+    /* Subtle Zoom Effect */
+    .reveal .slides section {
+      transition: transform 0.8s ease, opacity 0.8s ease;
+    }
 
-    <style>
-      .reveal .slides section {
-        text-align: left;
-        padding: 60px 60px;
-      }
+    .reveal .slides section.present {
+      transform: scale(1);
+      opacity: 1;
+    }
 
-      .reveal .title-slide {
-        text-align: center;
-      }
+    .reveal .slides section.past,
+    .reveal .slides section.future {
+      transform: scale(0.96);
+      opacity: 0.5;
+    }
+  </style>
+</head>
 
-      .reveal h1 {
-        font-size: 4rem !important;
-        font-weight: 900 !important;
-        line-height: 1.1;
-      }
+<body>
 
-      .reveal h2 {
-        font-size: 3.2rem !important;
-        font-weight: 800 !important;
-        color: #3b82f6;
-        margin-bottom: 2rem;
-      }
+<div class="reveal">
+<div class="slides">
 
-      .reveal h3 {
-        font-size: 2.4rem !important;
-        font-weight: 700 !important;
-        color: #10b981;
-        margin-bottom: 1.5rem;
-      }
+<!-- SLIDE 1 -->
+<section data-background-gradient="linear-gradient(to right, #0f172a, #1e293b)">
+  <h1 class="text-7xl font-black text-white leading-tight">
+    Thinking Like a Senior Developer
+  </h1>
 
-      .reveal ul {
-        margin-left: 1.5em;
-        line-height: 1.8;
-      }
+  <div class="mt-14 text-gray-300 text-2xl">
+    Adesemowo Emmanuel • February 27, 2026
+  </div>
 
-      .reveal li {
-        font-size: 1.8rem;
-        margin-bottom: 1rem;
-      }
+  <div class="mt-6 text-gray-400 text-xl">
+    Bincom Knowledge Development Session
+  </div>
 
-      .reveal p {
-        font-size: 1.6rem;
-      }
+  <p class="mt-20 text-3xl italic text-cyan-400">
+    From writing code to owning solutions 🚀
+  </p>
+</section>
 
-      .bg-card {
-        background-color: #1e293b;
-        border-radius: 16px;
-        padding: 2rem;
-      }
+<!-- SLIDE 2 -->
 
-      .grid-cols-2 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 3rem;
-      }
+<!-- Horizontal Parent -->
+<section>
 
-      .text-light {
-        color: #e2e8f0;
-      }
+  <!-- Slide 2A -->
+  <section data-background-gradient="linear-gradient(to right, #111827, #1f2937)">
+    <h2 class="text-5xl font-bold text-blue-400 mb-12">
+      What Does “Senior” Actually Mean?
+    </h2>
 
-      .text-gray {
-        color: #94a3b8;
-      }
+    <ul class="text-2xl space-y-6 text-gray-200">
+      <li>It’s not just years of experience</li>
+      <li>It’s not just writing complex code</li>
+      <li>It’s not knowing every framework</li>
+      <li>It’s not being the fastest developer</li>
+    </ul>
 
-      pre code {
-        border-radius: 12px;
-        padding: 1.5rem !important;
-        font-size: 1rem !important;
-      }
+    <p class="mt-20 text-xl text-gray-500 text-center">
+      (Press ↓)
+    </p>
+  </section>
 
-      @media (min-width: 1400px) {
-        .reveal .slides section {
-          padding: 80px 160px;
-        }
-        .reveal h1 { font-size: 4.5rem !important; }
-        .reveal h2 { font-size: 3.6rem !important; }
-        .reveal li { font-size: 2rem; }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="reveal">
-      <div class="slides">
+  <!-- Slide 2B -->
+  <section data-background-gradient="linear-gradient(to right, #0f172a, #1e293b)">
+    <h2 class="text-5xl font-bold text-blue-400 mb-16">
+      So What Is a Senior Developer?
+    </h2>
 
-        <!-- Slide 1: Title -->
-        <section data-background-color="#0f172a" class="title-slide">
-          <h1 class="text-white font-black text-center leading-tight">
-            Thinking Like a Senior Developer
-          </h1>
-          <h2 class="mt-10 text-primary text-center font-bold text-5xl">
-            Decision-Making, Tradeoffs & Technical Ownership
-          </h2>
-          <p class="mt-20 text-3xl text-center text-lighttext">
-            Adesemowo Emmanuel • February 27, 2026
-          </p>
-          <p class="mt-4 text-2xl text-center text-gray">
-            Bincom Knowledge Development Session
-          </p>
-          <p class="mt-16 text-2xl text-center text-accent italic">
-            From writing code to owning solutions 🚀
-          </p>
-        </section>
+    <div class="text-center">
+      <p class="text-3xl text-white font-bold">
+        A Senior Developer owns problems end-to-end.
+      </p>
+      <p class="mt-8 text-2xl text-gray-300">
+        They make sound technical decisions.
+      </p>
+      <p class="mt-6 text-2xl text-gray-300">
+        They think long-term.
+      </p>
+      <p class="mt-6 text-2xl text-gray-300">
+        And they elevate the entire team.
+      </p>
+    </div>
+  </section>
 
-        <!-- Slide 2a: Why Senior Thinking Matters (Part 1) -->
-        <section>
-          <h2 class="font-bold mb-12">1️⃣ Why Senior-Level Thinking Matters in 2026</h2>
-          <h3 class="text-accent mb-4">Career Levels</h3>
-          <ul class="space-y-2 text-light">
-            <li>Junior → Executes tasks</li>
-            <li>Mid-level → Delivers features efficiently</li>
-            <li>Senior → Drives strategic impact</li>
-          </ul>
-          <p class="mt-6 text-gray italic">
-            Takeaway: Moving up means thinking beyond code—own the outcome.
-          </p>
-        </section>
+</section>
 
-        <!-- Slide 2b: Why Senior Thinking Matters (Part 2) -->
-        <section>
-          <h3 class="text-accent mb-4">Reality Today</h3>
-          <ul class="space-y-2 text-light">
-            <li>AI writes code faster than ever</li>
-            <li>Humans still own decisions & tradeoffs</li>
-            <li>70% of project failures come from poor decisions</li>
-          </ul>
-          <p class="mt-6 text-gray italic">
-            Takeaway: Senior developers add value by guiding decisions, not just writing code.
-          </p>
-          <p class="mt-8 text-2xl text-accent">
-            Senior = Problem owner, not just problem solver
-          </p>
-        </section>
+<section data-background-gradient="linear-gradient(to right, #0f172a, #1e293b)">
+  <h2 class="text-5xl font-bold text-blue-400 mb-12">
+    So How Do You Get There?
+  </h2>
 
-        <!-- Slide 3: Mindset Shift -->
-        <section>
-          <h2 class="font-bold mb-10">2️⃣ The Mindset Shift: Executor → Owner</h2>
-          <ul class="space-y-6 text-2xl text-light">
-            <li>Treat every feature like your own product<br /><span class="text-gray italic">Example: You own the signup feature, not just the login form.</span></li>
-            <li>Anticipate issues before they happen<br /><span class="text-gray italic">Example: Think about scaling, security, and edge cases.</span></li>
-            <li>Ask “Why?” deeply — understand business impact<br /><span class="text-gray italic">Example: Why are we building this? Will it delight users?</span></li>
-            <li>Document decisions (use ADRs)<br /><span class="text-gray italic">Example: Future teammates understand why choices were made.</span></li>
-          </ul>
-          <p class="mt-12 text-2xl text-gray">
-            Takeaway: This shift turns good developers into indispensable ones.
-          </p>
-        </section>
+  <p class="text-3xl text-gray-200 text-center max-w-4xl mx-auto leading-relaxed">
+    Becoming senior is not about waiting for promotion.
+    <br><br>
+    It’s about shifting how you think.
+  </p>
 
-        <!-- Slide 4a: Tradeoffs -->
-        <section>
-          <h2 class="font-bold mb-12">3️⃣ Mastering Tradeoffs</h2>
-          <p class="text-2xl text-light mb-8">Every decision has costs. Seniors choose consciously.</p>
-          <ul class="space-y-6 text-2xl text-light">
-            <li>Performance vs Readability</li>
-            <li>Scalability vs Simplicity</li>
-            <li>Speed of Delivery vs Quality</li>
-            <li>Cost vs Features</li>
-          </ul>
-        </section>
+  <p class="mt-16 text-3xl text-cyan-300 font-bold text-center">
+    Let’s talk about the mindset shifts.
+  </p>
+</section>
 
-        <!-- Slide 4b: Tradeoffs Example -->
-        <section>
-          <h3 class="font-bold text-accent mb-8">Real Example</h3>
-          <pre><code class="javascript" data-trim data-line-numbers>
-// Fast but complex (hard to maintain)
-for (let i = 0; i < arr.length; i += 2) { ... }
+<!-- SLIDE 3 -->
+<section data-background-gradient="linear-gradient(to right, #0f172a, #1e293b)">
+  <h2 class="text-5xl font-bold text-blue-400 mb-12">
+    Shift #1: From Tasks to Outcomes
+  </h2>
 
-// Clean & readable (minor perf hit)
-arr.forEach(item => process(item));
-          </code></pre>
-          <p class="mt-12 text-2xl text-accent">
-            Takeaway: Seniors pick based on context — perfection is the enemy of done.
-          </p>
-        </section>
+  <div class="grid grid-cols-2 gap-12 text-xl">
 
-        <!-- Slide 5a: Decision Frameworks -->
-        <section>
-          <h2 class="font-bold mb-12">4️⃣ Decision-Making Frameworks Seniors Use</h2>
-          <h3 class="text-accent mb-4">RICE Scoring</h3>
-          <ul class="space-y-4 text-light">
-            <li>Reach</li>
-            <li>Impact</li>
-            <li>Confidence</li>
-            <li>Effort</li>
-          </ul>
-          <p class="mt-4 text-gray italic">Use RICE to prioritize features objectively based on value vs effort.</p>
-        </section>
-
-        <!-- Slide 5b: DACI -->
-        <section>
-          <h3 class="text-accent mb-4">DACI Framework</h3>
-          <ul class="space-y-4 text-light">
-            <li>Driver</li>
-            <li>Approver</li>
-            <li>Contributors</li>
-            <li>Informed</li>
-          </ul>
-          <p class="mt-4 text-gray italic">Use DACI to clarify roles in team decisions and make choices defensible.</p>
-          <p class="mt-8 text-2xl text-gray">Frameworks make decisions repeatable and defensible.</p>
-        </section>
-
-        <!-- Slide 6: Architecture & Communication -->
-        <section>
-          <h2 class="font-bold mb-12">5️⃣ Architecture & Communication</h2>
-          <ul class="space-y-6 text-2xl text-light">
-            <li>Design system flow before writing code</li>
-            <li>Explain decisions with simple analogies</li>
-            <li>Accept feedback without ego</li>
-            <li>Document tradeoffs for future teammates</li>
-          </ul>
-          <p class="mt-16 text-2xl text-accent">
-            Takeaway: Great code + clear communication = Trusted leadership.
-          </p>
-        </section>
-
-        <!-- Slide 7: Hands-On Scenario -->
-        <section data-background-color="#991b1b">
-          <h2 class="text-white font-bold mb-12">6️⃣ Hands-On Scenario</h2>
-          <p class="text-2xl text-light mb-8">
-            You’re adding user authentication with AI-based login suggestions.
-          </p>
-          <ul class="space-y-6 text-2xl text-light">
-            <li>JWT vs Sessions?</li>
-            <li>Performance vs Security?</li>
-            <li>Simple implementation vs Scalable design?</li>
-            <li>Quick delivery vs Thorough testing?</li>
-          </ul>
-          <pre class="mt-12"><code class="javascript" data-trim>
-// Example tradeoff: JWT
-const token = jwt.sign(payload, secret, { expiresIn: '7d' });
-// Stateless & scalable — but larger tokens
-          </code></pre>
-          <p class="mt-12 text-3xl text-accent font-bold">
-            What would you choose — and why?
-          </p>
-        </section>
-
-        <!-- Slide 8: Your Next Steps -->
-        <section>
-          <h2 class="font-bold mb-12">7️⃣ Your Path to Senior Impact</h2>
-          <ol class="space-y-6 text-2xl text-light list-decimal pl-8">
-            <li>Pick one framework (RICE or DACI) and use it this week</li>
-            <li>Own one full feature end-to-end in your next task</li>
-            <li>Document one tradeoff decision with clear reasons</li>
-            <li>Practice explaining a past decision to a teammate</li>
-            <li>Review your recent code with “senior eyes”</li>
-          </ol>
-          <p class="mt-12 text-3xl text-accent font-bold">
-            Small consistent actions → Senior impact in months
-          </p>
-        </section>
-
-        <!-- Slide 9: Q&A -->
-        <section data-background-color="#1e293b">
-          <h1 class="text-7xl font-bold text-white mb-16">Questions?</h1>
-          <ul class="space-y-8 text-3xl text-light max-w-5xl mx-auto">
-            <li>→ What’s your biggest decision challenge right now?</li>
-            <li>→ Which tradeoff do you struggle with most?</li>
-            <li>→ Any decision horror story from a project?</li>
-          </ul>
-          <p class="mt-20 text-3xl text-primary">Let’s discuss!</p>
-        </section>
-
-        <!-- Slide 10: Thank You -->
-        <section data-background-color="#0f172a" class="title-slide">
-          <h1 class="text-6xl font-bold text-white">Thank You!</h1>
-          <p class="mt-12 text-3xl text-primary">Keep deciding wisely 🚀</p>
-          <p class="mt-8 text-2xl text-lighttext">Reach out anytime @Hade_emm</p>
-        </section>
-
-      </div>
+    <div class="bg-card">
+      <h3 class="text-3xl text-cyan-400 mb-6">Execution Thinking</h3>
+      <ul class="space-y-4 text-gray-200">
+        <li>“What should I build?”</li>
+        <li>Focus on finishing tickets</li>
+        <li>Delivers exactly what was asked</li>
+      </ul>
     </div>
 
-    <!-- Reveal.js Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
+    <div class="bg-card">
+      <h3 class="text-3xl text-cyan-400 mb-6">Senior Thinking</h3>
+      <ul class="space-y-4 text-gray-200">
+        <li>“What problem are we solving?”</li>
+        <li>Understands business impact</li>
+        <li>Improves the solution, not just the task</li>
+      </ul>
+    </div>
 
-    <script>
-      Reveal.initialize({
-        hash: true,
-        transition: "slide",
-        slideNumber: "c/t",
-        plugins: [RevealHighlight],
-      });
-    </script>
-  </body>
+  </div>
+</section>
+
+<!-- SLIDE 4 -->
+<section data-background-gradient="linear-gradient(to right, #111827, #000000)">
+  <h2 class="text-5xl font-bold text-blue-400 mb-12">
+    Shift #2: From Code to Systems
+  </h2>
+
+  <ul class="text-2xl space-y-6 text-gray-200">
+    <li>Understands architecture decisions</li>
+    <li>Thinks about scalability early</li>
+    <li>Designs for maintainability</li>
+    <li>Considers performance trade-offs</li>
+    <li>Sees how everything connects</li>
+  </ul>
+</section>
+
+<!-- SLIDE 5 -->
+<section data-background-gradient="linear-gradient(to right, #0f172a, #1e3a8a)">
+  <h2 class="text-5xl font-bold text-blue-300 mb-12">
+    Shift #3: From Speed to Judgment
+  </h2>
+
+  <ul class="text-2xl space-y-6 text-gray-200">
+    <li>Knows when to move fast</li>
+    <li>Knows when to slow down</li>
+    <li>Makes trade-offs consciously</li>
+    <li>Avoids over-engineering</li>
+    <li>Builds simple first</li>
+  </ul>
+
+  <p class="mt-16 text-2xl text-cyan-300 text-center">
+    The best seniors are calm, not chaotic
+  </p>
+</section>
+
+<!-- SLIDE 6 -->
+<section data-background-gradient="linear-gradient(to right, #111827, #1f2937)">
+  <h2 class="text-5xl font-bold text-blue-400 mb-12">
+    Shift #4: From Individual Contributor to Force Multiplier
+  </h2>
+
+  <ul class="text-2xl space-y-6 text-gray-200">
+    <li>Mentors juniors</li>
+    <li>Improves code review quality</li>
+    <li>Documents decisions clearly</li>
+    <li>Raises team standards</li>
+    <li>Unblocks others quickly</li>
+  </ul>
+
+  <p class="mt-16 text-2xl text-cyan-300 text-center">
+    Seniors make everyone around them better
+  </p>
+</section>
+
+<!-- SLIDE 7 -->
+<section data-background-gradient="linear-gradient(to right, #065f46, #064e3b)">
+  <h2 class="text-5xl font-bold text-emerald-400 mb-12">
+    AI & Senior-Level Thinking
+  </h2>
+
+  <ul class="text-2xl space-y-6 text-gray-200">
+    <li>Uses AI for acceleration, not dependency</li>
+    <li>Understands generated code deeply</li>
+    <li>Validates edge cases manually</li>
+    <li>Improves prompts strategically</li>
+    <li>Owns final responsibility</li>
+  </ul>
+</section>
+
+<!-- SLIDE 8 -->
+<section data-background-gradient="linear-gradient(to right, #7f1d1d, #991b1b)">
+  <h2 class="text-5xl font-bold text-white mb-12">
+    What Holds Developers Back?
+  </h2>
+
+  <ul class="text-2xl space-y-6 text-gray-100">
+    <li>Fear of making decisions</li>
+    <li>Waiting to be told what to do</li>
+    <li>Over-engineering everything</li>
+    <li>Avoiding ownership of failures</li>
+    <li>Thinking promotion is automatic</li>
+  </ul>
+</section>
+
+<!-- SLIDE 9 -->
+<section data-background-gradient="linear-gradient(to right, #0f172a, #1e293b)">
+  <h2 class="text-5xl font-bold text-blue-400 mb-12">
+    How to Start Thinking Like a Senior Today
+  </h2>
+
+  <ol class="text-2xl space-y-6 text-gray-200 list-decimal pl-8">
+    <li>Ask “Why are we doing this?”</li>
+    <li>Propose improvements, not just solutions</li>
+    <li>Write code others can maintain</li>
+    <li>Think long-term impact</li>
+    <li>Own results fully</li>
+  </ol>
+
+  <p class="mt-16 text-3xl font-bold text-cyan-300 text-center">
+    Promotion follows responsibility.
+  </p>
+</section>
+
+<!-- SLIDE 10 -->
+<section data-background-gradient="linear-gradient(to right, #000000, #0f172a)">
+  <h1 class="text-6xl font-bold text-white mb-16">
+    Questions?
+  </h1>
+
+  <ul class="text-3xl text-gray-300 space-y-10">
+    <li>→ Where do you feel stuck right now?</li>
+    <li>→ What decision are you currently avoiding?</li>
+    <li>→ What would change if you took ownership today?</li>
+  </ul>
+</section>
+
+<section data-background-gradient="linear-gradient(to right, #0f172a, #1e293b)">
+  <h1 class="text-7xl font-bold text-white mb-12">
+    Thank You.
+  </h1>
+
+  <p class="text-3xl text-cyan-400">
+    Thinking like a Senior starts today 🚀
+  </p>
+
+  <p class="mt-20 text-xl text-gray-400">
+    Adesemowo Emmanuel • February 27, 2026
+  </p>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+
+<script>
+Reveal.initialize({
+  transition: 'slide',
+  transitionSpeed: 'slow',
+  backgroundTransition: 'fade',
+  controls: true,
+  progress: true,
+  hash: true,
+  center: true,
+  width: 1280,
+  height: 720
+});
+</script>
+
+</body>
 </html>
